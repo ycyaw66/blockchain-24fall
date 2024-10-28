@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useState } from 'react';
-import { Card, Button, Input, List, Form, Modal, message } from 'antd';
+import { Card, Button, Input, List, Form, message } from 'antd';
 import { buyMyRoomContract, myERC20Contract, simpleSwapContract } from './utils/contracts';
 import { web3 } from './utils/contracts';
 import './App.css';
@@ -91,6 +91,7 @@ const App = () => {
     try {
       console.log(`Converting ${ethToErc20} Wei to ERC20 tokens`);
       const amount = await simpleSwapContract.methods.swapETHForERC20().send({ from: account, value: web3.utils.toWei(ethToErc20, "wei") });
+      console.log(amount);
       message.success('兑换成功!');
     } catch (error: any) {
       console.log(`Error: ${error.message}`);
@@ -156,6 +157,7 @@ const App = () => {
     }
   };
 
+  // 用户领取空投房屋的函数
   const handleAirDrop = async () => {
     if (!account) {
       message.error('请先连接钱包!');
@@ -198,6 +200,7 @@ const App = () => {
     }
   };
 
+  // 获取市场房屋的函数
   const fetchMarketHouses = async () => {
     if (!account) {
       message.error('请先连接钱包!');
